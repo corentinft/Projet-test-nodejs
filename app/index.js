@@ -1,10 +1,20 @@
-const Users = require("./models/users")
+const ConnexionController = require("../app/controllers/ConnexionController")
+const express = require('express')
+const Users = require('../app/models/users')
 
-const users = new Users()
+const app = express()
+const connexionController = new ConnexionController(new Users())
 
-// users.add('corentin.fouquet@gmail.com', 'Password')
-// users.get('corentin.fouquet@gmail.com')
+app.get('/', function (req, res) {
+    res.send('Hello World!')
+})
 
-users.put('corentin.fouquet@gmail.com', 'ouioui')
-// users.get('corentin.fouquet@gmail.com')
+app.get('/login', connexionController.login.bind(connexionController))
 
+app.get('/register', connexionController.register.bind(connexionController))
+
+app.get('/forgetPw', connexionController.ForgetPw.bind(connexionController))
+
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!')
+})

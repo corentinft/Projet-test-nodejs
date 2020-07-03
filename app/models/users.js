@@ -19,7 +19,7 @@ module.exports = class Users {
 
         databaseConnexion.disconnection(client)
 
-        return res.rows
+        return res.rows[0]
     }
 
     async put(email, password) {
