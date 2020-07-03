@@ -115,6 +115,40 @@ describe('Fonctions de connexion/inscription ', () => {
             assert.equal(result.result, 'Error-Not-Email')
         })
 
+        it("Retourne une erreur si l'email est déjà utilisé", () => {
+            // Arrange
+            const db = {
+                add: (email, password) => {
+                    assert.equal(email, 'corentin.fouquet@exemple.fr')
+                    assert.equal(password, 'Password')
+
+                    return false
+                }
+            }
+
+            const connexionController = new ConnexionController(db)
+            let result = null
+
+            const req = {
+                query: {
+                    email: 'corentin.fouquet@exemple.fr',
+                    password: 'Password'
+                }
+            }
+            const res = {
+                send: value => {
+                    // value = { result : "Error-Email-Exist" }
+                    result = value
+                }
+            }
+
+            // Act
+            connexionController.register(req, res)
+
+            // Assert
+            assert.equal(result.result, 'Error-Email-Exist')
+        })
+
         it("Crée un user avec MDP et un email", () => {
             // Arrange
             const db = {
@@ -265,7 +299,7 @@ describe('Fonctions de connexion/inscription ', () => {
 
                     pass = true
 
-                    return data[email]
+                    return { password : data[email] }
                 }
             }
 
@@ -307,7 +341,7 @@ describe('Fonctions de connexion/inscription ', () => {
 
                     pass = true
 
-                    return data[email]
+                    return { password : data[email] }
                 }
             }
 
@@ -480,7 +514,7 @@ describe('Fonctions de connexion/inscription ', () => {
 
                     pass = true
 
-                    return data[email]
+                    return { password : data[email] }
                 }
             }
 
@@ -551,7 +585,7 @@ describe('Fonctions de connexion/inscription ', () => {
 
                     pass = true
 
-                    return data[email]
+                    return { password : data[email] }
                 },
                 put: (email, newPassword) => {
                     assert.equal(email, 'corentin.fouquet@exemple.fr')

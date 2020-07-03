@@ -22,7 +22,7 @@ module.exports = class ConnexionController {
             return res.send({result: 'Error-Undefined-Email', token: ''})
         }
 
-        if(req.query.password !== data ) {
+        if(req.query.password !== data.password ) {
             return res.send({result: 'Error-Wrong-Password', token: ''})
         }
         else {
@@ -54,7 +54,7 @@ module.exports = class ConnexionController {
         }
 
         if(!this._db.add(req.query.email, req.query.password)) {
-            return res.send({result: 'no'})
+            return res.send({result: 'Error-Email-Exist'})
         }
 
         res.send({result: 'Ok'})
@@ -87,7 +87,7 @@ module.exports = class ConnexionController {
             return res.send({result: 'Error-Undefined-Email'})
         }
 
-        if(req.query.oldPassword !== data ) {
+        if(req.query.oldPassword !== data.password ) {
             return res.send({result: 'Error-Wrong-Password'})
         }
         else {
