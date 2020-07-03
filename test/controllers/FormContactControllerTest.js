@@ -3,12 +3,13 @@ const FormContactController = require('../../app/controllers/FormContactControll
 
 let formContactController = null
 let result = null
+let pass = false
 
 describe("Fonctions d'un formulaire de contact ", () => {
     beforeEach(() => {
         // Arrange
         const db = {
-            sendContact: (form) => {
+            sendContact: form => {
                 assert.equal(form.email, 'killian.ronvel@exemple.fr')
                 assert.equal(form.name, 'Patrick')
                 assert.equal(form.surname, 'Balkany')
@@ -20,8 +21,6 @@ describe("Fonctions d'un formulaire de contact ", () => {
         }
 
         formContactController = new FormContactController(db)
-
-        pass = false
 
         result = null
 

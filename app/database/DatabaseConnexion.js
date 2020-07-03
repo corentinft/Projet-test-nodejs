@@ -1,9 +1,10 @@
 const { Client } = require('pg')
+require('dotenv').config()
 
 module.exports = class DatabaseConnexion {
 
     connexion() {
-        const connectionString = "postgresql://corentin:postgres@localhost:5432/unittest";
+        const connectionString = process.env.DATABASE_URL;
 
         const client = new Client({
             connectionString: connectionString

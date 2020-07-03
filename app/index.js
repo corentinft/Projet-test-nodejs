@@ -15,6 +15,6 @@ app.get('/register', connexionController.register.bind(connexionController))
 
 app.get('/forgetPw', connexionController.ForgetPw.bind(connexionController))
 
-app.listen(3000, function () {
+app.listen(3000, () => {
     console.log('Example app listening on port 3000!')
 })
