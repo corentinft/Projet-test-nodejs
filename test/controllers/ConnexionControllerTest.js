@@ -178,7 +178,6 @@ describe('Fonctions de connexion/inscription ', () => {
             // Assert
             assert.equal(result.result, 'Error-Password-Null')
             assert.equal(result.token, '')
-            assert.equal(pass, true)
         })
 
         it("Retourne une erreur si l'email est vide", () => {
@@ -208,7 +207,6 @@ describe('Fonctions de connexion/inscription ', () => {
             // Assert
             assert.equal(result.result, 'Error-Email-Null')
             assert.equal(result.token, '')
-            assert.equal(pass, true)
         })
 
         it("Retourne une erreur si l'email n'existe pas", () => {
@@ -276,7 +274,7 @@ describe('Fonctions de connexion/inscription ', () => {
 
             const req = {
                 query: {
-                    email: 'fouquet.corentin@exemple.fr',
+                    email: 'corentin.fouquet@exemple.fr',
                     password: 'PassworD'
                 }
             }
@@ -318,7 +316,7 @@ describe('Fonctions de connexion/inscription ', () => {
 
             const req = {
                 query: {
-                    email: 'fouquet.corentin@exemple.fr',
+                    email: 'corentin.fouquet@exemple.fr',
                     password: 'Password'
                 }
             }
@@ -392,7 +390,7 @@ describe('Fonctions de connexion/inscription ', () => {
             }
 
             // Act
-            connexionController.login(req, res)
+            connexionController.ForgetPw(req, res)
 
             // Assert
             assert.equal(result.result, 'Error-OldPassword-Null')
@@ -421,7 +419,7 @@ describe('Fonctions de connexion/inscription ', () => {
             }
 
             // Act
-            connexionController.login(req, res)
+            connexionController.ForgetPw(req, res)
 
             // Assert
             assert.equal(result.result, 'Error-Email-Null')
@@ -463,7 +461,7 @@ describe('Fonctions de connexion/inscription ', () => {
             }
 
             // Act
-            connexionController.login(req, res)
+            connexionController.ForgetPw(req, res)
 
             // Assert
             assert.equal(result.result, 'Error-Undefined-Email')
@@ -504,7 +502,7 @@ describe('Fonctions de connexion/inscription ', () => {
             }
 
             // Act
-            connexionController.login(req, res)
+            connexionController.ForgetPw(req, res)
 
             // Assert
             assert.equal(result.result, 'Error-Wrong-Password')
@@ -533,7 +531,7 @@ describe('Fonctions de connexion/inscription ', () => {
             }
 
             // Act
-            connexionController.register(req, res)
+            connexionController.ForgetPw(req, res)
 
             // Assert
             assert.equal(result.result, 'Error-Length-Password')
@@ -546,12 +544,20 @@ describe('Fonctions de connexion/inscription ', () => {
                 'killian.ronvel@exemple.fr': 'ToiPlusMoi'
             }
             let pass = false
+            let pass2 = false
             const db = {
+                get: (email) => {
+                    assert.equal(email, 'corentin.fouquet@exemple.fr')
+
+                    pass = true
+
+                    return data[email]
+                },
                 put: (email, newPassword) => {
                     assert.equal(email, 'corentin.fouquet@exemple.fr')
                     assert.equal(newPassword, 'PassworD')
 
-                    pass = true
+                    pass2 = true
 
                     return data[email]
                 }
@@ -575,11 +581,12 @@ describe('Fonctions de connexion/inscription ', () => {
             }
 
             // Act
-            connexionController.login(req, res)
+            connexionController.ForgetPw(req, res)
 
             // Assert
             assert.equal(result.result, 'Ok')
             assert.equal(pass, true)
+            assert.equal(pass2, true)
         })
     })
 })
