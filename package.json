@@ -20,7 +20,7 @@
   "homepage": "https://github.com/corentinft/Projet-test-nodejs#readme",
   "devDependencies": {
     "assert": "^2.0.0",
-    "mocha": "^8.0.1"
+    "mocha": "^8.4.0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
